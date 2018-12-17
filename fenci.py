@@ -69,7 +69,7 @@ for file_name in file_list:
 
     word_index = 0
     for w in seg_list:
-        if w not in ['\n',' ','\t', ' '] and w in keywords:
+        if w not in ['\n',' ','\t', ' '] and w in keyword_doc_dict[doc_id]:
             # 英文获取词干
             w = porter_stemmer.stem(w)
             if w in term_doc_dict:
