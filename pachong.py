@@ -15,7 +15,7 @@ class GetHTML():
     def __init__(self):
         self.headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}  #给请求指定一个请求头来模拟chrome浏览器
         self.web_url = ''
-        self.folder_path = 'C:\\Users\\dlwog\\Pictures\\hi\\pachong'
+        self.folder_path = 'pachong'
 
         print('开始创建文件夹')
         self.mkdir(self.folder_path)  # 创建文件夹
@@ -156,7 +156,7 @@ class GetHTML():
             print(path, '文件夹已存在，不再创建')
 
 ghtml = GetHTML()  # 创建一个类的实例
-f = open("C:\\Users\\dlwog\\Pictures\\hi\\dict.txt.small.txt", 'r', encoding="utf-8")
+f = open("dict\\dict.txt.small.txt", 'r', encoding="utf-8")
 lines = f.readlines()
 
 

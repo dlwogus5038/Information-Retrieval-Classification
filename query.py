@@ -15,31 +15,31 @@ keyword_doc_dict = {}
 title_doc_dict = {}
 
 print("读取 term_doc_dict")
-with open('C:\\Users\\dlwog\\Pictures\\hi\\term_doc_dict.json', 'r', encoding='utf-8') as json_file:
+with open('temp\\term_doc_dict.json', 'r', encoding='utf-8') as json_file:
     term_doc_dict = json.load(json_file)
 
 print("读取 invert_index")
-with open('C:\\Users\\dlwog\\Pictures\\hi\\invert_index.json', 'r', encoding='utf-8') as json_file:
+with open('temp\\invert_index.json', 'r', encoding='utf-8') as json_file:
     invert_index = json.load(json_file)
 
 print("读取 nk_dict")
-with open('C:\\Users\\dlwog\\Pictures\\hi\\nk_dict.json', 'r', encoding='utf-8') as json_file:
+with open('temp\\nk_dict.json', 'r', encoding='utf-8') as json_file:
     nk_dict = json.load(json_file)
 
 print("读取 mj_list")
-with open('C:\\Users\\dlwog\\Pictures\\hi\\mj_list.json', 'r', encoding='utf-8') as json_file:
+with open('temp\\mj_list.json', 'r', encoding='utf-8') as json_file:
     mj_list = json.load(json_file)
 
 print("读取 dj_len_list")
-with open('C:\\Users\\dlwog\\Pictures\\hi\\dj_len_list.json', 'r', encoding='utf-8') as json_file:
+with open('temp\\dj_len_list.json', 'r', encoding='utf-8') as json_file:
     dj_len_list = json.load(json_file)
 
 print("读取 keyword_doc_dict")
-with open('C:\\Users\\dlwog\\Pictures\\hi\\keyword_doc_dict.json', 'r', encoding='utf-8') as json_file:
+with open('temp\\keyword_doc_dict.json', 'r', encoding='utf-8') as json_file:
     keyword_doc_dict = json.load(json_file)
 
 print("读取 title_doc_dict")
-with open('C:\\Users\\dlwog\\Pictures\\hi\\title_doc_dict.json', 'r', encoding='utf-8') as json_file:
+with open('temp\\title_doc_dict.json', 'r', encoding='utf-8') as json_file:
     title_doc_dict = json.load(json_file)
 
 for elem in title_doc_dict: # 把题目做分词之后，把分好的单词放在关键词字典里

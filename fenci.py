@@ -10,8 +10,8 @@ from jieba import analyse
 
 # 英文获取词干
 porter_stemmer = PorterStemmer()
-path = "C:\\Users\\dlwog\\Pictures\\hi\\pachong\\"
-new_path = "C:\\Users\\dlwog\\Pictures\\hi\\fenci\\"
+path = "pachong\\"
+new_path = "fenci\\"
 doc_num = 0 # 文档个数
 doc_id = 0
 term_doc_dict = {}
@@ -75,7 +75,7 @@ for file_name in file_list:
     file_object.close()
 
 print("停用词处理")
-stop_words = open("C:\\Users\\dlwog\\Pictures\\hi\\stop_words.txt", 'r', encoding="utf-8-sig")
+stop_words = open("dict\\stop_words.txt", 'r', encoding="utf-8-sig")
 lines = stop_words.readlines()
 for line in lines:
     try:
@@ -120,31 +120,31 @@ for index in range(1, doc_num+1):
 
 
 print("保存 term_doc_dict")
-with open('C:\\Users\\dlwog\\Pictures\\hi\\term_doc_dict.json', 'w', encoding='utf-8') as json_file:
+with open('temp\\term_doc_dict.json', 'w', encoding='utf-8') as json_file:
     json.dump(term_doc_dict, json_file, ensure_ascii=False)
 
 print("保存 invert_index")
-with open('C:\\Users\\dlwog\\Pictures\\hi\\invert_index.json', 'w', encoding='utf-8') as json_file:
+with open('temp\\invert_index.json', 'w', encoding='utf-8') as json_file:
     json.dump(invert_index, json_file, ensure_ascii=False)
 
 print("保存 nk_dict")
-with open('C:\\Users\\dlwog\\Pictures\\hi\\nk_dict.json', 'w', encoding='utf-8') as json_file:
+with open('temp\\nk_dict.json', 'w', encoding='utf-8') as json_file:
     json.dump(nk_dict, json_file, ensure_ascii=False)
 
 print("保存 mj_list")
-with open('C:\\Users\\dlwog\\Pictures\\hi\\mj_list.json', 'w', encoding='utf-8') as json_file:
+with open('temp\\mj_list.json', 'w', encoding='utf-8') as json_file:
     json.dump(mj_list, json_file, ensure_ascii=False)
 
 print("保存 dj_len_list")
-with open('C:\\Users\\dlwog\\Pictures\\hi\\dj_len_list.json', 'w', encoding='utf-8') as json_file:
+with open('temp\\dj_len_list.json', 'w', encoding='utf-8') as json_file:
     json.dump(dj_len_list, json_file, ensure_ascii=False)
 
 print("保存 keyword_doc_dict")
-with open('C:\\Users\\dlwog\\Pictures\\hi\\keyword_doc_dict.json', 'w', encoding='utf-8') as json_file:
+with open('temp\\keyword_doc_dict.json', 'w', encoding='utf-8') as json_file:
     json.dump(keyword_doc_dict, json_file, ensure_ascii=False)
 
 print("保存 title_doc_dict")
-with open('C:\\Users\\dlwog\\Pictures\\hi\\title_doc_dict.json', 'w', encoding='utf-8') as json_file:
+with open('temp\\title_doc_dict.json', 'w', encoding='utf-8') as json_file:
     json.dump(title_doc_dict, json_file, ensure_ascii=False)
 
 
