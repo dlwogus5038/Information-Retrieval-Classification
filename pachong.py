@@ -153,7 +153,7 @@ class GetHTML():
             os.makedirs(path)
             print('创建成功！')
         else:
-            print(path, '文件夹已经存在了，不再创建')
+            print(path, '文件夹已存在，不再创建')
 
 ghtml = GetHTML()  # 创建一个类的实例
 f = open("C:\\Users\\dlwog\\Pictures\\hi\\dict.txt.small.txt", 'r', encoding="utf-8")

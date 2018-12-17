@@ -50,7 +50,7 @@ for elem in title_doc_dict: # 把题目做分词之后，把分好的单词放�
     keyword_doc_dict[elem] = list(set(keyword_doc_dict[elem])) # 去重
 
 print("开始搜索文档")
-query_string = "开始搜索文档"
+query_string = "天上女人"
 query_seg_list = jieba.cut_for_search(query_string)
 
 
