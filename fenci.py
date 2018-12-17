@@ -9,7 +9,7 @@ from pathlib import Path
 from jieba import analyse
 
 
-def mkdir(self, path):  ##这个函数创建文件夹
+def mkdir(path):  ##这个函数创建文件夹
     path = path.strip()
     isExists = os.path.exists(path)
     if not isExists:
@@ -35,6 +35,7 @@ nk_dict = {}
 dj_len_list = []
 keyword_doc_dict = {}
 title_doc_dict = {}
+doc_text_dict = {}
 
 file_list = os.listdir(path)
 doc_num = len(file_list)
@@ -49,10 +50,17 @@ for file_name in file_list:
     all_the_text = file_object.read()
     html_title = all_the_text[0: all_the_text.find('\n')]
     title_doc_dict[doc_id] = html_title
+    doc_text_dict[doc_id] = all_the_text
+
+    title_list = []
+    for elem in jieba.cut(html_title):
+        if elem not in ['\n',' ','\t', ' ']:
+            title_list.append(elem)
 
     # 开始抽取每个文档的关键词
-    keywords = extract_words(all_the_text)
-    keyword_doc_dict[doc_id] = keywords
+    keywords = extract_words(all_the_text, topK=40)
+    keyword_doc_dict[doc_id] = keywords + title_list
+    keyword_doc_dict[doc_id] = list(set(keyword_doc_dict[doc_id]))
 
     # 开始分词
     seg_list = jieba.cut(all_the_text)
@@ -61,7 +69,7 @@ for file_name in file_list:
 
     word_index = 0
     for w in seg_list:
-        if w not in ['\n',' ','\t', ' ']:
+        if w not in ['\n',' ','\t', ' '] and w in keywords:
             # 英文获取词干
             w = porter_stemmer.stem(w)
             if w in term_doc_dict:
@@ -160,6 +168,9 @@ print("保存 title_doc_dict")
 with open('temp\\title_doc_dict.json', 'w', encoding='utf-8') as json_file:
     json.dump(title_doc_dict, json_file, ensure_ascii=False)
 
+print("保存 doc_text_dict")
+with open('temp\\doc_text_dict.json', 'w', encoding='utf-8') as json_file:
+    json.dump(doc_text_dict, json_file, ensure_ascii=False)
 
 print("开始记录单词")
 check_dict = open(new_path + 'check_dict.txt', 'w', encoding='utf-8') # 检查字典中有没有乱码

@@ -28,36 +28,45 @@ class GetHTML():
 
         html_label = BeautifulSoup(r.text, 'lxml')
 
-        find = html_label.find('div', class_="result c-container ", tpl="se_com_default")
-        if find is not None:
-            time = find.find('span', class_=" newTimeFactor_before_abs m")
-            if time is not None:
-                time = time.string
+        doc_nbr = 0
 
-            url = find.find('a', target="_blank")['href']
+        find_list = html_label.find_all('div', class_="result c-container ", tpl="se_com_default")
+        for find in find_list:
+            if doc_nbr == 3:
+                break
+            if find is not None:
+                time = find.find('span', class_=" newTimeFactor_before_abs m")
+                if time is not None:
+                    time = time.string
 
-            # 开始进入实际网页
+                url = find.find('a', target="_blank")['href']
 
-            try:
-                re = requests.get(url, headers=self.headers)
-            except:
-                return True
-            hashmd5 = self.check_url(url)
+                # 开始进入实际网页
 
-            if hashmd5 in url_dict:
-                if url in url_dict[hashmd5]:
-                    print("发现重复文档")
-                    return True
+                try:
+                    re = requests.get(url, headers=self.headers)
+                except:
+                    continue
+                hashmd5 = self.check_url(url)
+
+                if hashmd5 in url_dict:
+                    if url in url_dict[hashmd5]:
+                        print("发现重复文档")
+                        continue
+                    else:
+                        url_dict[hashmd5].append(url)
                 else:
-                    url_dict[hashmd5].append(url)
-            else:
-                url_dict[hashmd5] = [url]
+                    url_dict[hashmd5] = [url]
 
-            if re.status_code == 200:
-                error_check = self.get_txt(re)
-                return error_check
-            else:
-                return True
+                if re.status_code == 200:
+                    error_check = self.get_txt(re)
+                    if error_check == True:
+                        continue
+                    else:
+                        doc_nbr = doc_nbr + 1
+                else:
+                    continue
+        return doc_nbr
 
     def check_url(self, url):
         # 生成一个md5对象
@@ -78,7 +87,10 @@ class GetHTML():
         try:
             html_text = html_text.decode('utf-8')
         except:
-            html_text = html_text.decode('gbk')
+            try:
+                html_text = html_text.decode('gbk')
+            except:
+                return True
 
         html_label = BeautifulSoup(html_text, 'lxml')
 
@@ -137,6 +149,7 @@ class GetHTML():
         return False
 
     def save_txt(self, string, html_title):  ##保存
+        global  doc_id
         file_name = str(doc_id) + ".txt"
         print('开始保存文件')
         f = open(file_name, 'w', encoding='utf-8')
@@ -144,6 +157,7 @@ class GetHTML():
         f.write(string)
         print(file_name, '文件保存成功！')
         f.close()
+        doc_id = doc_id + 1
 
     def mkdir(self, path):  ##这个函数创建文件夹
         path = path.strip()
@@ -161,14 +175,12 @@ lines = f.readlines()
 
 
 for line in lines:
-    if countNum % 1000 == 1:
+    if countNum % 100 == 1:
         string = line.split(' ',1)
         print(string[0])
         ghtml.web_url = "https://www.baidu.com/s?wd=" + string[0]
-        error_check = ghtml.get_html()  # 执行类中的方法
+        doc_nbr = ghtml.get_html()  # 执行类中的方法
 
-        if error_check is False:
-            countNum = countNum + 1
-            doc_id = doc_id + 1
+        countNum = countNum + doc_nbr
     else:
         countNum = countNum + 1

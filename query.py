@@ -6,6 +6,7 @@ import os
 import json
 from pathlib import Path
 
+porter_stemmer = PorterStemmer()
 term_doc_dict = {}
 invert_index = {}
 nk_dict = {}
@@ -42,7 +43,7 @@ print("读取 title_doc_dict")
 with open('temp\\title_doc_dict.json', 'r', encoding='utf-8') as json_file:
     title_doc_dict = json.load(json_file)
 
-for elem in title_doc_dict: # 把题目做分词之后，把分好的单词放在关键词字典里
+for elem in title_doc_dict: # 把标题做分词之后，把分好的单词放在关键词字典里
     seg_list = jieba.cut(title_doc_dict[elem])
     for seg in seg_list:
         keyword_doc_dict[elem].append(seg)
@@ -50,7 +51,7 @@ for elem in title_doc_dict: # 把题目做分词之后，把分好的单词放�
     keyword_doc_dict[elem] = list(set(keyword_doc_dict[elem])) # 去重
 
 print("开始搜索文档")
-query_string = "天上女人"
+query_string = "父亲"
 query_seg_list = jieba.cut_for_search(query_string)
 
 
@@ -65,12 +66,12 @@ for elem in query_seg_list:
 
     if elem in term_doc_dict: # 创建query的 单词-文档矩阵
         term_doc_dict[elem][0] = term_doc_dict[elem][0] + 1
-
-    tmp_list.append(elem)
+        tmp_list.append(elem)
 
 query_seg_list = tmp_list
 mq = 0
 for elem in query_seg_list: # 计算 mq
+    elem = porter_stemmer.stem(elem)
     if term_doc_dict[elem][0] > mq:
         mq = term_doc_dict[elem][0]
 
