@@ -156,7 +156,7 @@ class GetHTML():
             print(path, '文件夹已存在，不再创建')
 
 ghtml = GetHTML()  # 创建一个类的实例
-f = open("dict\\dict.txt.small.txt", 'r', encoding="utf-8")
+f = open("../dict/dict.txt.small.txt", 'r', encoding="utf-8")
 lines = f.readlines()
 
 
