@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f3144b5e-9c12-44be-a237-be649d7baf9c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fenci.py" afterPath="$PROJECT_DIR$/fenci.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pachong.py" afterPath="$PROJECT_DIR$/pachong.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/query.py" afterPath="$PROJECT_DIR$/query.py" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,11 +34,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="pachong.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pachong.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pachong.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="161" column="0" lean-forward="false" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+            <state relative-caret-position="106">
+              <caret line="147" column="4" lean-forward="true" selection-start-line="147" selection-start-column="4" selection-end-line="155" selection-end-column="38" />
               <folding>
                 <element signature="e#43#73#0" expanded="true" />
               </folding>
@@ -48,14 +46,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fenci.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="fenci.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fenci.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="146" column="15" lean-forward="false" selection-start-line="146" selection-start-column="15" selection-end-line="146" selection-end-column="15" />
+            <state relative-caret-position="266">
+              <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
               <folding>
                 <element signature="e#16#58#0" expanded="true" />
-                <marker date="1545027039175" expanded="true" signature="1988:2018" ph="..." />
+                <marker date="1545027328876" expanded="true" signature="2269:2299" ph="..." />
               </folding>
             </state>
           </provider>
@@ -84,10 +82,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>get_txt</find>
-      <find>file_num</find>
-      <find>doc_len</find>
-      <find>all_a</find>
       <find>html_label</find>
       <find>r</find>
       <find>.string</find>
@@ -114,6 +108,10 @@
       <find>save_txt</find>
       <find>find</find>
       <find>C:</find>
+      <find>path</find>
+      <find>mkdir</find>
+      <find>fenci</find>
+      <find>new_path</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -137,8 +135,8 @@
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/test_baidu3.py" />
         <option value="$PROJECT_DIR$/pachong.py" />
-        <option value="$PROJECT_DIR$/fenci.py" />
         <option value="$PROJECT_DIR$/query.py" />
+        <option value="$PROJECT_DIR$/fenci.py" />
       </list>
     </option>
   </component>
@@ -149,7 +147,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="492" />
+    <option name="x" value="399" />
     <option name="y" value="38" />
     <option name="width" value="1608" />
     <option name="height" value="1047" />
@@ -517,7 +515,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="492" y="38" width="1608" height="1047" extended-state="0" />
+    <frame x="399" y="38" width="1608" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -556,22 +554,22 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/fenci.py</url>
-          <line>150</line>
+          <line>163</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/fenci.py</url>
-          <line>91</line>
+          <line>105</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/fenci.py</url>
-          <line>102</line>
+          <line>116</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/fenci.py</url>
-          <line>77</line>
+          <line>91</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -606,7 +604,7 @@
           <caret line="10" column="27" lean-forward="true" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
           <folding>
             <element signature="e#16#58#0" expanded="true" />
-            <marker date="1545027039175" expanded="true" signature="1988:2018" ph="..." />
+            <marker date="1545027328876" expanded="true" signature="2269:2299" ph="..." />
           </folding>
         </state>
       </provider>
@@ -662,7 +660,7 @@
           <caret line="21" column="38" lean-forward="false" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="38" />
           <folding>
             <element signature="e#16#58#0" expanded="true" />
-            <marker date="1545027039175" expanded="true" signature="1988:2018" ph="..." />
+            <marker date="1545027328876" expanded="true" signature="2269:2299" ph="..." />
           </folding>
         </state>
       </provider>
@@ -752,7 +750,7 @@
           <caret line="15" column="37" lean-forward="false" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
           <folding>
             <element signature="e#16#58#0" expanded="true" />
-            <marker date="1545027039175" expanded="true" signature="1988:2018" ph="..." />
+            <marker date="1545027328876" expanded="true" signature="2269:2299" ph="..." />
           </folding>
         </state>
       </provider>
@@ -973,23 +971,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fenci.py">
+    <entry file="file://$PROJECT_DIR$/pachong.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="146" column="15" lean-forward="false" selection-start-line="146" selection-start-column="15" selection-end-line="146" selection-end-column="15" />
+        <state relative-caret-position="106">
+          <caret line="147" column="4" lean-forward="true" selection-start-line="147" selection-start-column="4" selection-end-line="155" selection-end-column="38" />
           <folding>
-            <element signature="e#16#58#0" expanded="true" />
-            <marker date="1545027039175" expanded="true" signature="1988:2018" ph="..." />
+            <element signature="e#43#73#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pachong.py">
+    <entry file="file://$PROJECT_DIR$/fenci.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="161" column="0" lean-forward="false" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+        <state relative-caret-position="266">
+          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
           <folding>
-            <element signature="e#43#73#0" expanded="true" />
+            <element signature="e#16#58#0" expanded="true" />
+            <marker date="1545027328876" expanded="true" signature="2269:2299" ph="..." />
           </folding>
         </state>
       </provider>

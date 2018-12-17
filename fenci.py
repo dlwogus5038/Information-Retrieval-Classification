@@ -8,6 +8,20 @@ import json
 from pathlib import Path
 from jieba import analyse
 
+
+def mkdir(self, path):  ##这个函数创建文件夹
+    path = path.strip()
+    isExists = os.path.exists(path)
+    if not isExists:
+        print('创建名字叫做', path, '的文件夹')
+        os.makedirs(path)
+        print('创建成功！')
+    else:
+        print(path, '文件夹已存在，不再创建')
+
+mkdir('fenci')
+mkdir('temp')
+
 # 英文获取词干
 porter_stemmer = PorterStemmer()
 path = "pachong\\"
@@ -117,7 +131,6 @@ for key in term_doc_dict:
 print("开始取根号dj_len")
 for index in range(1, doc_num+1):
     dj_len_list[index] = dj_len_list[index] ** 0.5
-
 
 print("保存 term_doc_dict")
 with open('temp\\term_doc_dict.json', 'w', encoding='utf-8') as json_file:
