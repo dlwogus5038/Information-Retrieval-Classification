@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup  #导入BeautifulSoup 模块
 import hashlib # 检查重复url
 import re
 import os
+import json
 
 countNum = 1
 doc_id = 1
@@ -39,19 +40,25 @@ class GetHTML():
                 if time is not None:
                     time = time.string
 
+                title = find.find('h3', class_="t")
+                title = title.find('a')
+                title = title.text
+
                 url = find.find('a', target="_blank")['href']
 
                 # 开始进入实际网页
 
                 try:
                     re = requests.get(url, headers=self.headers)
+                    url = re.url
                 except:
                     continue
                 hashmd5 = self.check_url(url)
+                # print(hashmd5)
 
                 if hashmd5 in url_dict:
                     if url in url_dict[hashmd5]:
-                        print("发现重复文档")
+                        print("发现重复文档 title: " + title)
                         continue
                     else:
                         url_dict[hashmd5].append(url)
@@ -59,7 +66,7 @@ class GetHTML():
                     url_dict[hashmd5] = [url]
 
                 if re.status_code == 200:
-                    error_check = self.get_txt(re)
+                    error_check = self.get_txt(re, title, url, time)
                     if error_check == True:
                         continue
                     else:
@@ -76,7 +83,7 @@ class GetHTML():
         token = m1.hexdigest()
         return token
 
-    def get_txt(self, r):
+    def get_txt(self, r, title, url, time):
 
         html_text = r.text
         try:
@@ -94,11 +101,7 @@ class GetHTML():
 
         html_label = BeautifulSoup(html_text, 'lxml')
 
-        try:
-            html_head = html_label.find('head')
-            html_title = html_head.find('title').string # 获取网页标题
-        except:
-            return True
+        html_title = title
 
         find1 = html_label.find_all('script')
         for f in find1:
@@ -124,36 +127,36 @@ class GetHTML():
         find8 = html_label.find_all(id=re.compile('footer'))
         for f in find8:
             f.extract()
+        find9 = html_label.find_all('header')
+        for f in find9:
+            f.extract()
 
         string = html_label.get_text()
 
-        tmp = re.sub(r'\n+', "\n", string)
-        tmp1 = re.sub(r'\t*', "", tmp)
-        tmp2 = re.sub(r' +', " ", tmp1)
-        newstr = re.sub(r' +', " ", tmp2)
+        newstr = self.get_real_str(string)
 
         if len(newstr) < 150:
             return True
 
-        tmp = re.sub(r'\n', '', html_title)
-        tmp1 = re.sub(r'\t*', "", tmp)
-        tmp2 = re.sub(r' +', " ", tmp1)
-        html_title = re.sub(r' +', " ", tmp2)
+        html_title = self.get_real_str(html_title)
+        time = str(time)
 
         if html_title[0] == ' ' or html_title[0] == ' ':
             html_title = html_title[1:]
         if html_title[-1] == ' ' or html_title[-1] == ' ':
             html_title = html_title[0:-1]
 
-        self.save_txt(newstr, html_title)
+        self.save_txt(newstr, html_title, url, time)
         return False
 
-    def save_txt(self, string, html_title):  ##保存
+    def save_txt(self, string, html_title, url, time):  ##保存
         global  doc_id
         file_name = str(doc_id) + ".txt"
-        print('开始保存文件')
+        # print('开始保存文件')
         f = open(file_name, 'w', encoding='utf-8')
         f.write(html_title + '\n')
+        f.write(url + '\n')
+        f.write(time + '\n')
         f.write(string)
         print(file_name, '文件保存成功！')
         f.close()
@@ -169,13 +172,20 @@ class GetHTML():
         else:
             print(path, '文件夹已存在，不再创建')
 
+    def get_real_str(self, string):
+        tmp = re.sub(r'\n', '', string)
+        tmp1 = re.sub(r'\t*', "", tmp)
+        tmp2 = re.sub(r' +', " ", tmp1)
+        new_str = re.sub(r' +', " ", tmp2)
+        return new_str
+
 ghtml = GetHTML()  # 创建一个类的实例
 f = open("../dict/dict.txt.small.txt", 'r', encoding="utf-8")
 lines = f.readlines()
 
 
 for line in lines:
-    if countNum % 100 == 1:
+    if countNum % 65 == 1:
         string = line.split(' ',1)
         print(string[0])
         ghtml.web_url = "https://www.baidu.com/s?wd=" + string[0]
