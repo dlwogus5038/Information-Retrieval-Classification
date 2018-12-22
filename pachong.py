@@ -18,9 +18,9 @@ class GetHTML():
         self.web_url = ''
         self.folder_path = 'pachong'
 
-        print('开始创建文件夹')
+        print('创建文件夹')
         self.mkdir(self.folder_path)  # 创建文件夹
-        print('开始切换文件夹')
+        print('切换路径')
         os.chdir(self.folder_path)  # 切换路径至上面创建的文件夹
 
     def get_html(self):

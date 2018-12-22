@@ -34,6 +34,7 @@ mj_list = []
 nk_dict = {}
 dj_len_list = []
 keyword_doc_dict = {}
+keyword_weight_dict = {}
 doc_text_dict = {}
 doc_time_dict = {}
 doc_title_dict = {}
@@ -44,7 +45,7 @@ doc_num = len(file_list)
 
 extract_words = analyse.extract_tags
 
-print("开始创建单词-文档矩阵,倒排索引列表，文档长度列表")
+print("创建单词-文档矩阵,倒排索引列表，文档长度列表")
 for file_name in file_list:
     file_object = open(path + file_name, encoding='utf-8-sig')
     doc_id = int(file_name[0 : file_name.find('.txt')])
@@ -63,6 +64,8 @@ for file_name in file_list:
     html_time = all_the_text[0: divide_idx]
     all_the_text = all_the_text[divide_idx + 1:]
 
+    all_the_text = html_title + all_the_text
+
 
 
 
@@ -77,15 +80,33 @@ for file_name in file_list:
             title_list.append(elem)
 
     # 开始抽取每个文档的关键词
-    keywords = extract_words(all_the_text, topK=20)
-    keyword_doc_dict[doc_id] = keywords + title_list
-    keyword_doc_dict[doc_id] = list(set(keyword_doc_dict[doc_id]))
+    keyword_weight = extract_words(all_the_text, topK=20, withWeight=True)
+
+    keyword_list = []
+    for elem in keyword_weight:
+        keyword_list.append(elem[0])
+
+    for elem in jieba.cut(html_title):
+        if elem not in ['\n',' ','\t', ' '] and elem not in keyword_list:
+            keyword_list.append(elem)
+            keyword_weight.append((elem, 0.2))
+
+    keyword_doc_dict[doc_id] = keyword_list
+    keyword_weight_dict[doc_id] = keyword_weight
+    # keyword_doc_dict[doc_id] = list(set(keyword_doc_dict[doc_id]))
 
     temp_list = []
     for elem in keyword_doc_dict[doc_id]:
         word = porter_stemmer.stem(elem)
         temp_list.append(word)
     keyword_doc_dict[doc_id] = temp_list
+
+    temp_list = []
+    for elem in keyword_weight_dict[doc_id]:
+        word = porter_stemmer.stem(elem[0])
+        temp_list.append((word, elem[1]))
+    temp_list = sorted(temp_list, key= lambda x:x[1] ,reverse=True)
+    keyword_weight_dict[doc_id] = temp_list
 
     # 开始分词
     seg_list = jieba.cut(all_the_text)
@@ -136,7 +157,7 @@ for line in lines:
 
 
 # 求 nk 和 mj （为了求tf-idf权值）
-print("开始计算nk,mj,dj_len")
+print("计算nk,mj,dj_len")
 mj_list = [0]*(doc_num + 1)
 for key in term_doc_dict:
     nk_dict[key] = 0
@@ -147,7 +168,7 @@ for key in term_doc_dict:
             nk_dict[key] = nk_dict[key] + 1
 
 
-print("开始计算tf，idf, wkj和dj_len")
+print("计算tf，idf, wkj和dj_len")
 dj_len_list = [0]*(doc_num + 1)
 for key in term_doc_dict:
     for index in range(1, doc_num+1):
@@ -161,14 +182,35 @@ for key in term_doc_dict:
         term_doc_dict[key][index] = wkj
         dj_len_list[index] = dj_len_list[index] + (wkj * wkj)
 
-print("开始取根号dj_len")
+print("取根号dj_len")
 for index in range(1, doc_num+1):
     dj_len_list[index] = dj_len_list[index] ** 0.5
 
+print("筛选关键词")
+del_keyword = "!\"#@$%^&*()_-+=\\|][}{\';:/?.>,<、，。‘“；：、|】}【{——）（……￥！·~`《》？”’`"
+for doc_id in keyword_weight_dict:
+    temp_list = []
+    for elem in keyword_weight_dict[doc_id]:
+        elem_len = len(elem[0])
+        count = 0
+        for ch in elem[0]:
+            if ch in del_keyword:
+                count = count + 1
+
+        #if count == elem_len:
+        #    print(str(doc_id) + " delete " + elem[0])
+        #else:
+        #    temp_list.append(elem)
+
+        if count != elem_len:
+            temp_list.append(elem)
+    keyword_weight_dict[doc_id] = temp_list
+
+print("保存数据")
 index = 0
 term_index_dict = {}
 word_wij_invert_nk = [None] * len(term_doc_dict)
-doc_dj_keyword_title_url_time_text = [None] * (len(keyword_doc_dict) + 1)
+doc_dj_keyword_weight_title_url_time_text = [None] * (len(keyword_doc_dict) + 1)
 for elem in term_doc_dict:
     temp_dict = {}
     temp_dict['word'] = elem
@@ -185,11 +227,12 @@ for id in keyword_doc_dict:
     temp_dict['doc_id'] = id
     temp_dict['dj'] = dj_len_list[int(id)]
     temp_dict['keywords'] = keyword_doc_dict[id]
+    temp_dict['keyword_weight'] = keyword_weight_dict[id]
     temp_dict['title'] = doc_title_dict[id]
     temp_dict['url'] = doc_url_dict[id]
     temp_dict['time'] = doc_time_dict[id]
     temp_dict['text'] = doc_text_dict[id]
-    doc_dj_keyword_title_url_time_text[int(id)] = temp_dict
+    doc_dj_keyword_weight_title_url_time_text[int(id)] = temp_dict
 
 print("保存 word_wij_invert_nk")
 with open('temp\\word_wij_invert_nk.json', 'w', encoding='utf-8-sig') as json_file:
@@ -199,12 +242,20 @@ print("保存 term_index_dict")
 with open('temp\\term_index_dict.json', 'w', encoding='utf-8-sig') as json_file:
     json.dump(term_index_dict, json_file, ensure_ascii=False)
 
-print("保存 doc_dj_keyword_title_url_time_text")
-with open('temp\\doc_dj_keyword_title_url_time_text.json', 'w', encoding='utf-8-sig') as json_file:
-    json.dump(doc_dj_keyword_title_url_time_text, json_file, ensure_ascii=False)
+print("保存 doc_dj_keyword_weight_title_url_time_text")
+with open('temp\\doc_dj_keyword_weight_title_url_time_text.json', 'w', encoding='utf-8-sig') as json_file:
+    json.dump(doc_dj_keyword_weight_title_url_time_text, json_file, ensure_ascii=False)
 
-print("开始记录单词")
+print("记录单词")
 check_dict = open(new_path + 'check_dict.txt', 'w', encoding='utf-8-sig') # 检查字典中有没有乱码
 for item in term_doc_dict:
     check_dict.write(item + ' ')
+check_dict.close()
+
+print("记录关键词")
+check_dict = open(new_path + 'keyword_dict.txt', 'w', encoding='utf-8-sig') # 检查关键词中有没有乱码
+for id in range(1, len(keyword_weight_dict)+1):
+    for elem in keyword_weight_dict[str(id)]:
+        check_dict.write(elem[0] + ' ')
+    check_dict.write('\n')
 check_dict.close()
