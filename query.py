@@ -86,9 +86,17 @@ for doc in query_doc_sim_dict: # 计算完整的 similarity
 
 doc_list = sorted(query_doc_sim_dict.items(), key= lambda x:x[1] ,reverse=True)
 
-classify_num = 100
-classify_list = doc_list[0:classify_num]
-classify_num = len(classify_list)
+search_result = []
+for elem in doc_list:
+    search_result.append(elem[0])
+print(search_result)
+
+# classify_num = 100
+# classify_list = doc_list[0:classify_num]
+# classify_num = len(classify_list)
+
+classify_num = len(doc_list)
+classify_list = doc_list
 
 # print(classify_list) # 相似度排序结果
 
@@ -285,7 +293,7 @@ if len(center_dict.keys()) != 0:
 class_list = list(doc_vector_dict.keys())
 class_word = {}
 
-print(class_list)
+# print(class_list)
 
 for doc_id in class_list:
     if ',' in doc_id:
@@ -311,7 +319,40 @@ for doc_id in class_list:
         else:
             class_word[keyword] = [doc_id]
 
-print(class_word)
+cluster_result = []
+temp_list = []
+for word in class_word:
+    if len(class_word[word]) > 1:
+        cluster_result.append({word : class_word[word]})
+    else:
+        temp_list.append({word : class_word[word]})
+
+if len(cluster_result) <= 10:
+    for elem in query_seg_list:
+        if elem in class_word:
+            cluster_result.append({elem : class_word[elem]})
+
+    if len(cluster_result) <= 10:
+        cluster_result = cluster_result + temp_list
+
+max_len = 0
+for elem in cluster_result:
+    elem_len = len(elem[list(elem.keys())[0]])
+    if elem_len > max_len:
+        max_len = elem_len
+
+temp_list = []
+while(max_len > 0):
+    for elem in cluster_result:
+        if len(elem[list(elem.keys())[0]]) == max_len:
+            temp_list.append(elem)
+    max_len = max_len - 1
+
+if len(temp_list) > 10:
+    cluster_result = temp_list[0:10]
+else:
+    cluster_result = temp_list
+print(cluster_result)
 
 #TODO 关键词 weight로 점수들 다 더해서 점수 제일 높은걸로 分类하기!
 

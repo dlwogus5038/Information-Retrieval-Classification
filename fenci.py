@@ -254,8 +254,8 @@ check_dict.close()
 
 print("记录关键词")
 check_dict = open(new_path + 'keyword_dict.txt', 'w', encoding='utf-8-sig') # 检查关键词中有没有乱码
-for id in range(1, len(keyword_weight_dict)+1):
-    for elem in keyword_weight_dict[str(id)]:
+for id in keyword_weight_dict:
+    for elem in keyword_weight_dict[id]:
         check_dict.write(elem[0] + ' ')
     check_dict.write('\n')
 check_dict.close()
