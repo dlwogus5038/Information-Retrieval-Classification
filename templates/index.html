@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+    {% load static %}
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <br><br><br>
+                <form class="navbar-form navbar" role="search" method="get" action="{% url 'search' %}">
+                    <div class="form-group" align="center">
+                        <input type="text" name="sentence" id="sentence" class="form-control" size="98" value={{ sentence }} >
+                    </div>
+                    <button type="submit" class="btn btn-default" style="margin:0 auto;">Submit</button>
+                </form>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-9 column">
+                <div id="listdiv" class="row clearfix">
+                    {% for title_tuple_list, time, text_tuple_list, url, url_label, doc_id in search_result %}
+                        <div>
+                            <a rel="nofollow" style=" color:#28a4c9; font-size:20px;" class="btn" href= {{ url }} >
+                                {% for weak, strong in title_tuple_list %}
+                                    {{ weak }}<em style="color: #c9302c">{{ strong }}</em>
+                                {% endfor %}
+                            </a>
+                            <p>
+                                <strong>{{ time }}</strong>
+                                {% for weak, strong in text_tuple_list %}
+                                    {{ weak }}<em style="color: #c9302c">{{ strong }}</em>
+                                {% endfor %}
+                            </p>
+                            <p>
+                                <a rel="nofollow"  style="color:#4cae4c" class="btn" href= {{ url }} >{{ url_label }}</a>
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row clearfix" align="center">
+                    <ul class="pagination">
+                        {% for elem in page_list %}
+                            {% if elem == page %}
+                                <li class="active">
+                                    <a rel="nofollow" href="{% url 'page' %}?sentence={{ sentence }}&page={{ elem }}&show_cluster={{ cur_class }}">{{ elem }}</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a rel="nofollow" href="{% url 'page' %}?sentence={{ sentence }}&page={{ elem }}&show_cluster={{ cur_class }}">{{ elem }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-1 column"> </div>
+            <div class="col-md-2 column" style='border-left:1px solid gray;' >
+                <ul class="nav nav-pills">
+                    {% for keyword, len, elem in cluster_result %}
+                        {% if cur_class == keyword %}
+                            <li class="active" style="width:160%">
+                                <a rel="nofollow" href="{% url 'show_cluster' %}?sentence={{ sentence }}&page=1&show_cluster={{ keyword }}"> <span class="badge pull-right">{{ len }}</span> {{ keyword }}</a>
+                            </li>
+                        {% else %}
+                            <li style="width:160%">
+                                <a rel="nofollow" href="{% url 'show_cluster' %}?sentence={{ sentence }}&page=1&show_cluster={{ keyword }}"> <span class="badge pull-right">{{ len }}</span> {{ keyword }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+
+    </script>
+{% endblock %}
