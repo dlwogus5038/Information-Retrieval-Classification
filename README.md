@@ -1,26 +1,26 @@
 # Information-Retrieval-Classification / 带聚类功能的搜索引擎 / 클러스터링 기능을 포함한 검색엔진
 
 # 실험 환경
-운영체제 : Windows  
-IDE : PyCharm  
-구조 : b/s  
-Web 프레임워크 : Django 2.1.2  
-백엔드 프로그래밍 언어 : Python 3.6  
-데이터베이스 : MongoDB  
+**운영체제** : Windows  
+**IDE** : PyCharm  
+**구조** : b/s  
+**Web 프레임워크** : Django 2.1.2  
+**백엔드 프로그래밍 언어** : Python 3.6  
+**데이터베이스** : MongoDB  
 
 # 사용 방법
 （先安装好 nltk库，pymongo库，jieba库，requests库，bs4库，hashlib库，MongoDB， django ）  
-( 먼저 nltk, pymongo, jieba, requests, bs4, hashlib 패키지와 MongoDB, Django를 다운로드 받아야 합니다. )  
+**( 먼저 nltk, pymongo, jieba, requests, bs4, hashlib 패키지와 MongoDB, Django를 다운로드 받아야 합니다. )**  
 
-1. src/preprocess 디렉토리 안에 있는 pachong.py 실행 (웹 크롤링)  
+**1.** src/preprocess 디렉토리 안에 있는 pachong.py 실행 (웹 크롤링)  
    (pachong.py 문서의 188행에 있는 숫자 (ex, 65)를 수정하면 크롤링할 문서 갯수 수정 가능)  
-2. MongoDB 구동  
+**2.** MongoDB 구동  
    cmd -> MongoDB 디렉토리 -> 새로운 디렉토리 생성(ex, new_data) -> MongoDB/bin 디렉토리 -> mongod --dbpath (new_data 경로) 입력  
-3. src/preprocess 디렉토리 안에 있는 fenci.py 실행 (전처리 : 형태소 분석 + TF-IDF 행렬 생성 + 역 인덱스 생성 + 불용어 처리 + 키워드 추출 등...)  
+**3.** src/preprocess 디렉토리 안에 있는 fenci.py 실행 (전처리 : 형태소 분석 + TF-IDF 행렬 생성 + 역 인덱스 생성 + 불용어 처리 + 키워드 추출 등...)  
    프로세스 종료 전 데이터(TF-IDF행렬, 역 인덱스 등..)를 MongoDB에 저장  
-4. Django 서버 구동  
+**4.** Django 서버 구동  
    cmd -> src -> python manage.py runserver 0:8000 --noreload  
-5. 완료 (127.0.0.1:8000 으로 웹사이트 접속 가능)  
+**5.** 완료 (127.0.0.1:8000 으로 웹사이트 접속 가능)  
 
 # 구현 방법
 ## 웹 크롤링
