@@ -16,6 +16,7 @@
    (pachong.py 문서의 188행에 있는 숫자 (ex, 65)를 수정하면 크롤링할 문서 갯수 수정 가능)  
 **2.** MongoDB 구동  
    cmd -> MongoDB 디렉토리 -> 새로운 디렉토리 생성(ex, new_data) -> MongoDB/bin 디렉토리 -> mongod --dbpath (new_data 경로) 입력  
+   ** Linux의 경우에는 "sudo service mongod start --dbpath (new_data 경로)" 로 입력했음!! **  
 **3.** src/preprocess 디렉토리 안에 있는 fenci.py 실행 (전처리 : 형태소 분석 + TF-IDF 행렬 생성 + 역 인덱스 생성 + 불용어 처리 + 키워드 추출 등...)  
    프로세스 종료 전 데이터(TF-IDF행렬, 역 인덱스 등..)를 MongoDB에 저장  
 **4.** Django 서버 구동  
