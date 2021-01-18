@@ -7,6 +7,7 @@ import sys
 import os
 import json
 from jieba import analyse
+import platform
 
 
 def mkdir(path):  ##这个函数创建文件夹
@@ -21,10 +22,17 @@ def mkdir(path):  ##这个函数创建文件夹
 
 mkdir('fenci')
 
+# linux does not support "\\"
+os_dir_path_char = ""
+if platform.system() == "Linux":
+    os_dir_path_char = "/"
+else:
+    os_dir_path_char = "\\"
+
 # 英文获取词干
 porter_stemmer = PorterStemmer()
-path = "pachong\\"
-new_path = "fenci\\"
+path = "pachong" + os_dir_path_char
+new_path = "fenci" + os_dir_path_char
 doc_num = 0 # 文档个数
 doc_id = 0
 term_doc_dict = {}
@@ -159,7 +167,7 @@ for file_name in file_list:
     file_object.close()
 
 print("停用词处理")
-stop_words = open("dict\\stop_words.txt", 'r', encoding="utf-8-sig")
+stop_words = open("dict" + os_dir_path_char + "stop_words.txt", 'r', encoding="utf-8-sig")
 lines = stop_words.readlines()
 for line in lines:
     try:
