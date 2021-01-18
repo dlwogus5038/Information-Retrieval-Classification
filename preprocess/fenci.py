@@ -288,7 +288,7 @@ print("保存 word_wij_invert_titleinvert_nk")
 try:
     for elem in word_wij_invert_titleinvert_nk:
         if elem != None:
-            collection.save(elem)
+            collection.insert_one(elem)
 except pymongo.errors.DuplicateKeyError:
     print('record exists')
 except Exception as e:
@@ -301,7 +301,7 @@ print("保存 doc_dj_keyword_weight_title_url_time_text")
 try:
     for elem in doc_dj_keyword_weight_title_url_time_text:
         if elem != None:
-            collection2.save(elem)
+            collection2.insert_one(elem)
 except pymongo.errors.DuplicateKeyError:
     print('record exists')
 except Exception as e:
